@@ -18,3 +18,4 @@ class Dog(models.Model):
     # to save the data
     def register(self): 
         self.save()
+
