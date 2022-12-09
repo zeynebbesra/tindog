@@ -7,7 +7,7 @@ def generate_upload_path(instance, filename):
     return f'profile_photos/{instance.id}/{filename}'
 
 class Dog(models.Model):
-    dog_id=models.UUIDField(primary_key = True,default = uuid.uuid4,editable = False)
+    #dog_id=models.UUIDField(primary_key = True,default = uuid.uuid4,editable = False)
     name=models.CharField(max_length=30)
     breed=models.CharField(max_length=30)
     gender=models.CharField(max_length=10)
@@ -18,4 +18,6 @@ class Dog(models.Model):
     # to save the data
     def register(self): 
         self.save()
+
+
 
