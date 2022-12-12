@@ -17,8 +17,8 @@ class User(models.Model):
     age=models.IntegerField(max_length=2)
     image=models.ImageField(null=True,blank=True,upload_to=generate_upload_path)
     city=models.CharField(max_length=100)
-    password = models.CharField(length=10)
-    dog_id=models.UUIDField(primary_key = True,default = uuid.uuid4,editable = False)
+    password = models.CharField(max_length=10)
+    #dog_id=models.UUIDField(foreign_key = True,default = uuid.uuid4,editable = False)
     bio = models.TextField()
 
     # to save the data
