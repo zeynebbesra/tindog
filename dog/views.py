@@ -1,14 +1,26 @@
-from django.http import JsonResponse
+# from django.shortcuts import render
 from .models import Dog
+from .serializers import DogSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
+# safe=False allows us to give python data type to response
 
-# safe=False allows us to give a dictionary response
+@api_view(['GET'])
+def main(request):
+    data = 'Welcome to TinDogs API developed by Zeyneb Besra Ozden'
+    return Response(data)
 
-def endpoints(request):
-    data = ['/dogs', 'dogs/:id']
-    return JsonResponse(data, safe=False)
-
-
+@api_view(['GET'])
 def get_dogs(request):
-    dog_list = ['dog1', 'dog2', 'dog3']
-    return JsonResponse(dog_list, safe=False)
+
+    dog_list = Dog.objects.all()
+    serializer = DogSerializer(dog_list, many = True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def get_dog(request, id):
+    
+    dog = Dog.objects.get(id = id)
+    serializer = DogSerializer(dog, many = False)
+    return Response(serializer.data)
