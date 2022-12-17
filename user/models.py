@@ -15,10 +15,8 @@ class User(models.Model):
     img = models.CharField(max_length=500)
     bio = models.TextField()
 
-    def _str_(self):  #admin panelinde kullanıcılar kaydettiğimizde isimleri görünecek.
+    def __str__(self):  #admin panelinde kullanıcılar kaydettiğimizde isimleri görünecek.
         return self.first_name
-
-
 
 
 

@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from django.http import JsonResponse
 from .models import Dog
 from .serializers import DogSerializer
 from rest_framework import status
-import json
+
 #from django.db.models import Q
 
 # if we want to get dogs
@@ -36,8 +35,8 @@ def get_dogs(request):
 
     dog_list = Dog.objects.all()
     serializer = DogSerializer(dog_list, many = True)
-    #return Response(serializer.data, status=status.HTTP_200_OK, content_type='application/json')
-    return JsonResponse(dog_list, safe=False)
+    return Response(serializer.data, status=status.HTTP_200_OK, )
+    # return JsonResponse(dog_list, safe=False)
 
     # Handle get requests
 
@@ -67,7 +66,7 @@ def add_dog(request):
     Dog.objects.create(
         name=request.data['name'],
     )
-    return Response('added',status=status.HTTP_200_OK, content_type='application/json')
+    return Response('added',status=status.HTTP_200_OK,)
     
 
 @api_view(['GET'])
@@ -75,5 +74,5 @@ def get_dog(request, id):
     
     dog = Dog.objects.get(id = id)
     serializer = DogSerializer(dog, many = False)
-    return Response(serializer.data,status=status.HTTP_200_OK, content_type='application/json')
+    return Response(serializer.data,status=status.HTTP_200_OK)
 
