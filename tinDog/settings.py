@@ -37,8 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
-    'register',
+    #'rest_framework.authtoken',
+    #'rest_auth', # bknz : pip install django-rest-auth
+    #'register',
+    'knox',
+    'accounts',
     'user',
     'dog',
     'corsheaders',
@@ -62,6 +65,13 @@ INSTALLED_APPS = [
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAdminUser', )
+}"""
+
+"""REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  #tokenlarla istek yapılacak
+        'rest_framework.authentication.SessionAuthentication', #browsable api sayfamızda
+    ]
 }"""
 
 
@@ -149,6 +159,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
+
 
 #STATIC_ROOT = os.path.join(BASE_DIR, "static")
 

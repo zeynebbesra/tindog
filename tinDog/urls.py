@@ -22,13 +22,15 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('accounts.urls')),
     path('', include('dog.urls')),
     path('', include('user.urls')),
     #path('api-auth/', include('rest_framework.urls')),
-    #path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    #path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    #path('api/rest-auth/',include('rest_auth.urls')),
+   
 ]
 
-#router = DefaultRouter()
-#router.register('user', UserViewSet, basename='user')
-#urlpatterns += router.urls
+
+
+
+
