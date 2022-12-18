@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #'rest_auth', # bknz : pip install django-rest-auth
     #'register',
     'knox',
+    'django_rest_passwordreset',
     'accounts',
     'user',
     'dog',
@@ -49,28 +50,9 @@ INSTALLED_APPS = [
 
 
 """REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.DjangoModelPermissions',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAdminUser', )
-}"""
-
-"""REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',  #tokenlarla istek yapılacak
-        'rest_framework.authentication.SessionAuthentication', #browsable api sayfamızda
+        'rest_framework.authentication.TokenAuthentication',  #tokenlarla istek yapilacak
+        'rest_framework.authentication.SessionAuthentication', #browsable api sayfamizda
     ]
 }"""
 
@@ -178,4 +160,4 @@ REST_FRAMEWORK = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'    #!!!

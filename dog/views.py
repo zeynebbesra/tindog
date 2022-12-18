@@ -5,7 +5,7 @@ from .models import Dog
 from .serializers import DogSerializer
 from rest_framework import status
 
-#from django.db.models import Q
+
 
 # if we want to get dogs
 # GET /dogs
@@ -30,36 +30,15 @@ def main(request):
     data = 'Welcome to TinDogs API developed by Zeyneb Besra Ozden'
     return Response(data)"""
 
+#dogs listesini veriyor
 @api_view(['GET'])
-def get_dogs(request):
+def get_dogs(request):           
 
     dog_list = Dog.objects.all()
     serializer = DogSerializer(dog_list, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK, )
-    # return JsonResponse(dog_list, safe=False)
 
-    # Handle get requests
-
-    # if request.method == 'GET':
-    #     query = request.GET.get('query')
-
-    #     if query == None:
-    #         query = ''
-
-    #     dogs=Dog.objects.filter(Q(name__icontains = query))
-    #     serializer = DogSerializer(dogs, many=True)
-    #     return Response(serializer.data)
-    
-    # if request.method == 'POST':
-
-    #     dog=Dog.objects.create(
-    #         name=request.data['name'],
-    #     )
-    #     serializer = DogSerializer(dogs, many=False)
-    #     return Response(serializer.data)
-
-
-
+#dogs listesine dog ekliyor
 @api_view(['POST'])
 def add_dog(request):
 
@@ -68,7 +47,7 @@ def add_dog(request):
     )
     return Response('added',status=status.HTTP_200_OK,)
     
-
+#dog'u id'ye göre veriyor
 @api_view(['GET'])
 def get_dog(request, id):
     
