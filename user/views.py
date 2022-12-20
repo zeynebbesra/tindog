@@ -13,13 +13,13 @@ def get_users(request):
     serializer = UserSerializer(user_list, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK,)
 
-#users listesine dog ekliyor
-@api_view(['POST'])
+#users listesine user ekliyor
+"""@api_view(['POST'])
 def add_user(request):
     User.objects.create(
         first_name = request.data['first_name']
     )
-    return Response('added', status=status.HTTP_200_OK,)
+    return Response('added', status=status.HTTP_200_OK,)"""
 
 #user'ı id'ye göre veriyor
 @api_view(['GET'])
