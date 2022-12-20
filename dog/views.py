@@ -36,6 +36,7 @@ def get_dogs(request):
 
     dog_list = Dog.objects.all()
     serializer = DogSerializer(dog_list, many = True)
+    Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
     return Response(serializer.data, status=status.HTTP_200_OK, )
 
 #dogs listesine dog ekliyor
@@ -45,6 +46,7 @@ def add_dog(request):
     Dog.objects.create(
         name=request.data['name'],
     )
+    Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
     return Response('added',status=status.HTTP_200_OK,)
     
 #dog'u id'ye göre veriyor
@@ -53,5 +55,6 @@ def get_dog(request, id):
     
     dog = Dog.objects.get(id = id)
     serializer = DogSerializer(dog, many = False)
+    Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
     return Response(serializer.data,status=status.HTTP_200_OK)
 
