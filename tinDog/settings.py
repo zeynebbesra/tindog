@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +28,6 @@ SECRET_KEY = 'django-insecure-#=&nnn33-s=x+w&d997i194%)w=3!xk3$_=@qdliw)8+i7un76
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,32 +40,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
-    'register',
+    #'rest_framework.authtoken',
+    #'rest_auth', # bknz : pip install django-rest-auth
+    #'register',
+    'knox',
+    'django_rest_passwordreset',
+    'accounts',
     'user',
     'dog',
     'corsheaders',
 ]
 
 
-REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.DjangoModelPermissions',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAdminUser', )
-}
+"""REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  #tokenlarla istek yapilacak
+        'rest_framework.authentication.SessionAuthentication', #browsable api sayfamizda
+    ]
+}"""
 
 
 MIDDLEWARE = [
@@ -78,10 +72,17 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-ALLOWED_HOSTS=['*']
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+ALLOWED_HOSTS=['http://localhost:3000']
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+]
 
 ROOT_URLCONF = 'tinDog.urls'
 
@@ -151,9 +152,22 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+}
+
+
+#STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+#STATICFILES_DIRS = [BASE_DIR / "static"]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'    #!!!
