@@ -7,7 +7,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(("email address"), blank=True,unique=True)
-    age=models.IntegerField(max_length=2)
+    age=models.IntegerField()
     city=models.CharField(max_length=100)
     gender=models.CharField(max_length=10)
     password = models.CharField(max_length=10)

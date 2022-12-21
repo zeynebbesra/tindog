@@ -69,12 +69,13 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
+   
+    
 ]
-
-CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
-ALLOWED_HOSTS=['http://localhost:3000']
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+ALLOWED_HOSTS=['http://localhost:3000','127.0.0.1']
+#,'127.0.0.1'
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
 CORS_ALLOW_METHODS = [
@@ -83,6 +84,8 @@ CORS_ALLOW_METHODS = [
     'PUT',
     'DELETE',
 ]
+
+
 
 ROOT_URLCONF = 'tinDog.urls'
 
@@ -157,6 +160,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
         'knox.auth.TokenAuthentication',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
     ]
 }
 

@@ -5,6 +5,7 @@ from knox.models import AuthToken
 from .serializers import UserSerializer, RegisterSerializer
 from django.contrib.auth import login
 
+
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
@@ -21,22 +22,23 @@ from rest_framework.permissions import IsAuthenticated
 # Register API
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
-
+    # @api_view(['POST'])
     def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        serializer = RegisterSerializer(data = request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
+        
+         #Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
         return Response({
         "user": UserSerializer(user, context=self.get_serializer_context()).data,
         "token": AuthToken.objects.create(user)[1]
-        })
+        },status=status.HTTP_201_CREATED)
 
 
 
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
-
+    
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -75,7 +77,7 @@ class ChangePasswordView(generics.UpdateAPIView):
                 'message': 'Password updated successfully',
                 'data': []
             }
-
+            Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
             return Response(response)
-
+        Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
