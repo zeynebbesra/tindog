@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.http import JsonResponse
 from .models import Dog
 from .serializers import DogSerializer
 from rest_framework import status
-
+from rest_framework.views import APIView
 
 
 # if we want to get dogs
@@ -48,10 +49,54 @@ def add_dog(request):
     return Response('added',status=status.HTTP_200_OK,)
     
 #dog'u id'ye göre veriyor
-@api_view(['GET'])
+
+"""@api_view(['GET','PUT','DELETE'])
 def get_dog(request, id):
-    
     dog = Dog.objects.get(id = id)
-    serializer = DogSerializer(dog, many = False)
-    return Response(serializer.data,status=status.HTTP_200_OK)
+    if request.method == 'GET':
+        serializer = DogSerializer(dog, many = False)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
+    if request.method == 'PUT':
+        dog.age = request.data['age']
+        dog.img = request.data['img']
+
+        dog.save()
+        serializer = DogSerializer(dog, many = False)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+    if request.method == 'DELETE':
+        dog.delete()
+        return Response("dog was deleted") """
+
+
+class DogDetails(APIView):
+
+    def get_object(self, id):
+        try:
+            return Dog.objects.get(id = id)
+        except Dog.DoesNotExist:
+            raise JsonResponse('Dog does not exist')
+
+    def get(self, request, id):
+        dog = self.get_object(id)
+        serializer = DogSerializer(dog, many = False)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+    def put(self,request, id):
+        dog = self.get_object(id)
+        dog.age = request.data['age']
+        dog.img = request.data['img']
+        serializer = DogSerializer(dog, many = False)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+    def delete(self, request, id):
+        dog = self.get_object(id)
+        dog.delete()
+        return Response("dog was deleted")
+
+
+    
+
+    
 

@@ -15,21 +15,23 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .serializers import ChangePasswordSerializer
 from rest_framework.permissions import IsAuthenticated   
-
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
-
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        Response["Access-Control-Allow-Origin"] = "http://localhost:3000"
         return Response({
         "user": UserSerializer(user, context=self.get_serializer_context()).data,
         "token": AuthToken.objects.create(user)[1]
         })
+        response['Access-Control-Allow-Origin'] = '*'
 
 
 

@@ -23,6 +23,7 @@ urlpatterns = [
     path('', include('dog.urls')),
     path('', include('user.urls')),
    
+   
 ]
 
 

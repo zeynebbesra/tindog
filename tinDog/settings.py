@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -69,12 +72,26 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-ALLOWED_HOSTS=['*']
+"""ALLOWED_HOSTS=['*']
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
+CORS_ALLOW_HEADERS = ['*']"""
+
+CORS_ORIGIN_WHITELIST = ['http://localhost:3000']
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ['*']
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE',
+]
 
 ROOT_URLCONF = 'tinDog.urls'
+
+
 
 TEMPLATES = [
     {

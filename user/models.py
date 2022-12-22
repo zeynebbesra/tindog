@@ -14,6 +14,7 @@ class User(models.Model):
     dog_id=models.IntegerField()
     img = models.CharField(max_length=500)
     bio = models.TextField()
+    #dog = models.ForeignKey(Dog, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):  #admin panelinde kullanıcılar kaydettiğimizde isimleri görünecek.
         return self.first_name
